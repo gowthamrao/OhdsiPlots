@@ -1,0 +1,38 @@
+Package: OhdsiPlots
+Type: Package
+Title: An R package to compute temporal relationships between persons in two or more instantiated cohorts.
+Version: 0.0.1
+Date: 2023-04-25
+Authors@R: c(
+    person("Gowtham", "Rao", email = "rao@ohdsi.org", role = c("aut", "cre")),
+    person("Observational Health Data Science and Informatics", role = c("cph"))
+  )
+Maintainer: Gowtham Rao <rao@ohdsi.org>
+Description: An R package that takes output from OHDSI Results Model and provides plots for publications.
+Depends:
+	DatabaseConnector (>= 5.0.0),
+	R (>= 4.1.0)
+Imports:
+    checkmate,
+    dplyr,
+    lifecycle,
+    ParallelLogger,
+    SqlRender
+Suggests:
+  Eunomia,
+  remotes,
+  rmarkdown,
+  knitr,
+	testthat,
+	withr
+Remotes:
+  ohdsi/Eunomia,
+  ohdsi/ParallelLogger
+License: Apache License
+RoxygenNote: 7.2.3
+VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
+Language: en-US
+URL: https://ohdsi.github.io/OhdsiPlots/, https://github.com/OHDSI/OhdsiPlots
+BugReports: https://github.com/OHDSI/OhdsiPlots/issues
