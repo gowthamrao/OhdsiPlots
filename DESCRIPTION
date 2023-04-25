@@ -16,6 +16,7 @@ Imports:
     checkmate,
     dplyr,
     lifecycle,
+    OhdsiShinyModule,
     ParallelLogger,
     SqlRender
 Suggests:
@@ -27,6 +28,7 @@ Suggests:
 	withr
 Remotes:
   ohdsi/Eunomia,
+  ohdsi/OhdsiShinyModule,
   ohdsi/ParallelLogger
 License: Apache License
 RoxygenNote: 7.2.3
