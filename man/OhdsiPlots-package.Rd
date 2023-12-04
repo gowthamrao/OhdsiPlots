@@ -4,9 +4,9 @@
 \name{OhdsiPlots-package}
 \alias{OhdsiPlots}
 \alias{OhdsiPlots-package}
-\title{OhdsiPlots: An R package to compute temporal relationships between persons in two or more instantiated cohorts.}
+\title{OhdsiPlots: Another R package for plots.}
 \description{
-An R package that takes output from OHDSI Results Model and provides plots for publications.
+Another R package for plots.
 }
 \seealso{
 Useful links:
@@ -19,11 +19,6 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Gowtham Rao \email{rao@ohdsi.org}
-
-Other contributors:
-\itemize{
-  \item Observational Health Data Science and Informatics [copyright holder]
-}
 
 }
 \keyword{internal}
