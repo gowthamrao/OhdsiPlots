@@ -13,11 +13,11 @@ Imports:
     dplyr
 Suggests:
 Remotes:
-License: Apache License
+License: 
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Language: en-US
 URL: https://ohdsi.github.io/OhdsiPlots/, https://github.com/OHDSI/OhdsiPlots
-BugReports: https://github.com/OHDSI/OhdsiPlots/issues
+BugReports: https://github.com/OHDSI/OhdsiPlots/issues?

@@ -1,5 +1,6 @@
 #' @export
-plotTrendCurve <- function(dataTibble, dateColumn,
+plotTrendCurve <- function(dataTibble, 
+                           dateColumn,
                            smoothingMethod = "auto",
                            showStandardError = TRUE,
                            outputFilename = NULL,

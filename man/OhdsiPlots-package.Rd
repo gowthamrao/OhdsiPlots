@@ -13,7 +13,7 @@ Useful links:
 \itemize{
   \item \url{https://ohdsi.github.io/OhdsiPlots/}
   \item \url{https://github.com/OHDSI/OhdsiPlots}
-  \item Report bugs at \url{https://github.com/OHDSI/OhdsiPlots/issues}
+  \item Report bugs at \url{https://github.com/OHDSI/OhdsiPlots/issues?}
 }
 
 }
