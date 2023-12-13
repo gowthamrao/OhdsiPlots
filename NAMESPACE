@@ -2,6 +2,7 @@
 
 export(arrangeGgplots)
 export(createPopulationPyramid)
+export(plotCohortDiagnosticsIncidencePlotStratifiedByAgeGenderCalendarYear)
 export(plotTrendCurve)
 export(plotWeighted)
 export(renderTrendGraph)
