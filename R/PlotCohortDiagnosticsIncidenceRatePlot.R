@@ -24,7 +24,12 @@ plotCohortDiagnosticsIncidencePlotStratifiedByAgeGenderCalendarYear <-
     ) +
       geom_line() +
       scale_color_manual(values = c("Male" = "#1F77B4", "Female" = "#FFC0CB")) +
-      facet_grid(database ~ ageGroup, scales = "free_x", space = "free_x") +
+      facet_grid(
+        database ~ ageGroup,
+        scales = "free_x",
+        space = "free_x",
+        labeller = label_wrap_gen(width = 12)
+      ) +
       theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
       labs(y = y1Label, x = x1Label) +
       guides(color = guide_legend("Gender"))
