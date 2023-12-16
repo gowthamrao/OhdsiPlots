@@ -2,7 +2,9 @@
 plotCohortDiagnosticsIncidencePlotStratifiedByAgeGenderCalendarYear <-
   function(dataFrame,
            y1Label = "Incidence Rate per 1k PY",
-           x1Label = "Calendar Year") {
+           x1Label = "Calendar Year",
+           scaleYaxis = TRUE) {
+    # New parameter
     # Load required libraries
     require(ggplot2)
     
@@ -11,6 +13,9 @@ plotCohortDiagnosticsIncidencePlotStratifiedByAgeGenderCalendarYear <-
       factor(dataFrame$ageGroup, levels = unique(dataFrame$ageGroup[order(as.numeric(sapply(
         strsplit(dataFrame$ageGroup, "-"), `[`, 1
       )))]))
+    
+    # Determine scales argument based on scaleYaxis
+    scales_arg <- ifelse(scaleYaxis, "free_x", "free")
     
     # Create the plot
     ggplot(
@@ -26,7 +31,8 @@ plotCohortDiagnosticsIncidencePlotStratifiedByAgeGenderCalendarYear <-
       scale_color_manual(values = c("Male" = "#1F77B4", "Female" = "#FFC0CB")) +
       facet_grid(
         database ~ ageGroup,
-        scales = "free_x",
+        scales = scales_arg,
+        # Use conditional scales argument
         space = "free_x",
         labeller = label_wrap_gen(width = 12)
       ) +
