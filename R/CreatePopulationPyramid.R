@@ -1,7 +1,23 @@
+#' Create a Population Pyramid Bar Chart
+#'
+#' This function creates a population pyramid bar chart using ggplot2.
+#' The data must contain age groups, gender, and population counts.
+#'
+#' @param data A data frame containing the population data.
+#' @param ageGroupCol A string specifying the column name for age groups.
+#' @param genderCol A string specifying the column name for gender.
+#' @param populationCol A string specifying the column name for population counts.
+#' @param title A string specifying the title of the chart.
+#' @param maleColor A string specifying the color for male population bars.
+#' @param femaleColor A string specifying the color for female population bars.
+#' @return A ggplot object representing the population pyramid.
+#'
+#' @examples
+#' # Sample usage with default parameters
+#' # plot <- createPopulationPyramid(data)
 #' @export
-# Function to create a population pyramid bar chart
 createPopulationPyramid <-
-  function(data,
+  function(df,
            ageGroupCol = "ageGroup",
            genderCol = "sex",
            populationCol = "count",
@@ -13,25 +29,28 @@ createPopulationPyramid <-
     checkmate <- requireNamespace("checkmate", quietly = TRUE)
     
     # Check for data conformity using checkmate
-    checkmate::assertDataFrame(data, min.cols = 3)
-    checkmate::assertCharacter(ageGroupCol, len = 1)
-    checkmate::assertCharacter(genderCol, len = 1)
-    checkmate::assertNumeric(data[[populationCol]], any.missing = FALSE, lower = 0)
-    checkmate::assertCharacter(title, len = 1)
+    checkmate::assertDataFrame(df, min.cols = 3, add = "Data must be a data frame with at least 3 columns.")
+    checkmate::assertCharacter(ageGroupCol, len = 1, add = "Age group column name must be a single character string.")
+    checkmate::assertCharacter(genderCol, len = 1, add = "Gender column name must be a single character string.")
+    checkmate::assertNumeric(df[[populationCol]],
+                             any.missing = FALSE,
+                             lower = 0,
+                             add = "Population column must contain non-negative numeric values.")
+    checkmate::assertCharacter(title, len = 1, add = "Title must be a single character string.")
     
     # Extract the starting age from each age group and sort the data
-    data$startAge <-
-      as.numeric(gsub(".*?(\\d+).*", "\\1", data[[ageGroupCol]]))
-    ageGroupsOrdered <- data |>
+    df$startAge <-
+      as.numeric(gsub(".*?(\\d+).*", "\\1", df[[ageGroupCol]]))
+    ageGroupsOrdered <- df |>
       dplyr::arrange(startAge) |>
       dplyr::pull(ageGroupCol) |>
       unique()
     
-    data[[ageGroupCol]] <-
-      factor(data[[ageGroupCol]], levels = ageGroupsOrdered)
+    df[[ageGroupCol]] <-
+      factor(df[[ageGroupCol]], levels = ageGroupsOrdered)
     
     # Create a ggplot bar chart
-    plot <- ggplot2::ggplot(data,
+    plot <- ggplot2::ggplot(df,
                             ggplot2::aes(
                               x = !!rlang::sym(ageGroupCol),
                               fill = !!rlang::sym(genderCol),
@@ -46,7 +65,7 @@ createPopulationPyramid <-
       ggplot2::scale_y_continuous(
         labels = function(x)
           format(abs(x), big.mark = ",", scientific = FALSE),
-        limits = max(abs(data[[populationCol]]), na.rm = TRUE) * c(-1, 1)
+        limits = max(abs(df[[populationCol]]), na.rm = TRUE) * c(-1, 1)
       ) +
       ggplot2::coord_flip() +
       ggplot2::theme_minimal() +
@@ -60,6 +79,3 @@ createPopulationPyramid <-
     
     return(plot)
   }
-
-# Sample usage with default parameters
-# plot <- createPopulationPyramid(data)

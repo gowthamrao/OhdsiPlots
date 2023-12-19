@@ -1,43 +1,53 @@
+#' Create a Box Plot
+#'
+#' This function creates a box plot using ggplot2, given a specific data frame structure.
+#' It requires certain columns in the data frame and adds annotations for statistical
+#' measures like mean and standard deviation.
+#'
+#' @param df A data frame containing the required columns for plotting.
+#' @param title The title of the plot.
+#' @param yLabel The label for the y-axis.
+#' @param xLabel The label for the x-axis.
+#' @return A ggplot object representing the box plot.
+#' @examples
+#' # Example usage:
+#' # createBoxPlot(df = yourDataFrame, title = "Your Title", yLabel = "Y-axis Label", xLabel = "X-axis Label")
 #' @export
-createBoxPlot <- function(df,
-                          title,
-                          yLabel,
-                          xLabel) {
-  # Check if required columns are present in the dataframe
-  requiredCols <-
-    c(
-      "databaseId",
-      "countValue",
-      "minValue",
-      "maxValue",
-      "mean",
-      "sd",
-      "medianValue",
-      "p10Value",
-      "p25Value",
-      "p75Value",
-      "p90Value"
-    )
-  if (!all(requiredCols %in% names(df))) {
-    stop("Data frame does not have all required columns")
-  }
+createBoxPlot <- function(df, title, yLabel, xLabel) {
+  # Use checkmate for more informative messages
+  checkmate::assertDataFrame(df, min.ncol = 11)
+  checkmate::assertCharacter(title, len = 1)
+  checkmate::assertCharacter(yLabel, len = 1)
+  checkmate::assertCharacter(xLabel, len = 1)
   
-  # Apply rounding to one decimal place
-  numericCols <-
-    c(
-      "minValue",
-      "maxValue",
-      "mean",
-      "sd",
-      "medianValue",
-      "p10Value",
-      "p25Value",
-      "p75Value",
-      "p90Value"
-    )
+  requiredCols <- c(
+    "databaseId",
+    "countValue",
+    "minValue",
+    "maxValue",
+    "mean",
+    "sd",
+    "medianValue",
+    "p10Value",
+    "p25Value",
+    "p75Value",
+    "p90Value"
+  )
+  checkmate::assertNames(df, subset.of = requiredCols, add = FALSE)
+  
+  numericCols <- c(
+    "minValue",
+    "maxValue",
+    "mean",
+    "sd",
+    "medianValue",
+    "p10Value",
+    "p25Value",
+    "p75Value",
+    "p90Value"
+  )
   df[numericCols] <- lapply(df[numericCols], round, 1)
   
-  # Determine the position for displaying 'n ='
   nPos <-
     min(df$minValue) - (max(df$maxValue) - min(df$minValue)) * 0.1
   
