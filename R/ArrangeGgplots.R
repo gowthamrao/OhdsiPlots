@@ -43,15 +43,10 @@ arrangeGgplots <-
     if (shareX || shareY) {
       combinedPlot <-
         combinedPlot & patchwork::plot_layout(guides = 'collect')
-      if (shareX) {
-        combinedPlot <-
-          combinedPlot & patchwork::plot_layout(scales = 'free_x')
-      }
-      if (shareY) {
-        combinedPlot <-
-          combinedPlot & patchwork::plot_layout(scales = 'free_y')
-      }
     }
+    
+    # Optionally, adjust axes display
+    # combinedPlot <- combinedPlot & patchwork::plot_layout(axes = "free")
     
     # Return the combined plot
     return(combinedPlot)
