@@ -42,6 +42,17 @@ plotWeighted <- function(df,
   checkmate::assertLogical(useScinot, len = 1)
   checkmate::assertCharacter(plotTheme, len = 1)
   
+  # Improved theme handling
+  if (is.character(plotTheme)) {
+    library(ggplot2)
+    # Attempt to convert character to a ggplot2 theme using do.call
+    # If plotTheme is not a valid ggplot2 theme, an error will occur naturally
+    plotTheme <- do.call(plotTheme, list())
+  } else if (!inherits(plotTheme, "theme")) {
+    # If plotTheme is not a theme object, throw an error
+    stop("plotTheme must be a valid ggplot2 theme name or a ggplot2 theme object.")
+  }
+  
   if (!useScinot) {
     # Temporarily increase the penalty for scientific notation
     oldScipen <- getOption("scipen")
@@ -71,8 +82,8 @@ plotWeighted <- function(df,
       ggplot2::xlab(xLabel) +
       ggplot2::ylab(yLabel) +
       ggplot2::scale_x_continuous(labels = scales::comma) +
-      ggplot2::scale_y_continuous(labels = scales::comma) +
-      do.call(plotTheme, list())
+      ggplot2::scale_y_continuous(labels = scales::comma)
+    
   } else if (plotType == "bar") {
     dataSummarised <- df |>
       dplyr::group_by(.data[[x]]) |>
@@ -86,11 +97,12 @@ plotWeighted <- function(df,
       ggplot2::xlab(xLabel) +
       ggplot2::ylab(yLabel) +
       ggplot2::scale_x_continuous(labels = scales::comma) +
-      ggplot2::scale_y_continuous(labels = scales::comma) +
-      do.call(plotTheme, list())
+      ggplot2::scale_y_continuous(labels = scales::comma)
   } else {
     stop("Unsupported plot type. Supported types are 'histogram' and 'bar'.")
   }
+  
+  plot <- plot + plotTheme
   
   if (!useScinot) {
     # Reset the scientific notation penalty
