@@ -27,14 +27,17 @@ arrangeGgplots <-
     checkmate::assertLogical(shareY, len = 1)
     
     # Construct the combined plot using the layout instruction
-    combinedPlot <-
-      eval(parse(
-        text = paste0(
-          "patchwork::wrap_plots(ggplotList[[1]], ",
-          layoutInstruction,
-          ")"
-        )
-      ))
+    command <- paste0(
+      "patchwork::wrap_plots(",
+      "list(",
+      paste("ggplotList[[", seq_along(ggplotList), "]]", collapse = ", "),
+      "), ",
+      "'",
+      layoutInstruction,
+      "'",
+      ")"
+    )
+    combinedPlot <- eval(parse(text = command))
     
     # Apply shared axes and labels if requested
     if (shareX || shareY) {
